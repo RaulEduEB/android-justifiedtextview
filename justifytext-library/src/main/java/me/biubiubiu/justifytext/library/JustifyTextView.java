@@ -39,14 +39,16 @@ public class JustifyTextView extends TextView {
             int lineStart = layout.getLineStart(i);
             int lineEnd = layout.getLineEnd(i);
             String line = text.substring(lineStart, lineEnd);
-
-            float width = StaticLayout.getDesiredWidth(text, lineStart, lineEnd, getPaint());
-            if (needScale(line) && i < layout.getLineCount() -1) {
-                drawScaledText(canvas, lineStart, line, width);
+            if ((i + 1) != layout.getLineCount()) {
+                float width = StaticLayout.getDesiredWidth(text, lineStart, lineEnd, this.getPaint());
+                if (this.needScale(line)) {
+                    this.drawScaledText(canvas, lineStart, line, width);
+                } else {
+                    canvas.drawText(line, 0.0F, (float) this.mLineY, paint);
+                }
             } else {
-                canvas.drawText(line, 0, mLineY, paint);
+                canvas.drawText(line, 0.0F, (float) this.mLineY, paint);
             }
-
             mLineY += getLineHeight();
         }
     }
